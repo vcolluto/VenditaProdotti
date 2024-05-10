@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.0">
+    <attributes>
+        <attribute name="name" value=""/>
+        <attribute name="authors" value="enzoc"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2024-05-10 10:03:07 "/>
+        <attribute name="created" value="ZW56b2M7RU5DT0wtUEM7MjAyNC0wNS0xMDsiMDk6MjU6NDkgIjsyMzAy"/>
+        <attribute name="edited" value="ZW56b2M7RU5DT0wtUEM7MjAyNC0wNS0xMDsiMTA6MDM6MDcgIjsxOzIzOTI="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="prodotti" type="String" array="True" size="5"/>
+            <declare name="prezzi" type="Real" array="True" size="5"/>
+            <declare name="quantit&#224;" type="Integer" array="True" size="5"/>
+            <declare name="i, qta" type="Integer" array="False" size=""/>
+            <declare name="daAcquistare, risposta" type="String" array="False" size=""/>
+            <declare name="Totale" type="Real" array="False" size=""/>
+            <declare name="Trovato" type="Boolean" array="False" size=""/>
+            <for variable="i" start="0" end="4" direction="inc" step="1">
+                <output expression="&quot;Inserisci il prodotto nr &quot; &amp; i" newline="True"/>
+                <output expression="&quot;Nome: &quot;" newline="True"/>
+                <input variable="prodotti[i]"/>
+                <output expression="&quot;Prezzo: &quot;" newline="True"/>
+                <input variable="prezzi[i]"/>
+                <output expression="&quot;Quantit&#224;: &quot;" newline="True"/>
+                <input variable="quantit&#224;[i]"/>
+            </for>
+            <assign variable="Totale" expression="0"/>
+            <do expression="risposta==&quot;s&quot;">
+                <output expression="&quot;Che prodotto vuoi acquistare? &quot;" newline="True"/>
+                <input variable="daAcquistare"/>
+                <assign variable="Trovato" expression="false"/>
+                <for variable="i" start="0" end="4" direction="inc" step="1">
+                    <if expression="daAcquistare==prodotti[i]">
+                        <then>
+                            <assign variable="Trovato" expression="true"/>
+                            <output expression="&quot;Prezzo: &quot; &amp; prezzi[i]" newline="True"/>
+                            <output expression="&quot;Inserisci la quantit&#224;:&quot;" newline="True"/>
+                            <input variable="qta"/>
+                            <if expression="qta&lt;=quantit&#224;[i]">
+                                <then>
+                                    <output expression="&quot;Acquisto effettuato&quot;" newline="True"/>
+                                    <assign variable="quantit&#224;[i]" expression="quantit&#224;[i]-qta"/>
+                                    <assign variable="Totale" expression="Totale+prezzi[i]*qta"/>
+                                </then>
+                                <else>
+                                    <output expression="&quot;Quantit&#224; non sufficiente&quot;" newline="True"/>
+                                </else>
+                            </if>
+                        </then>
+                        <else/>
+                    </if>
+                </for>
+                <if expression="Trovato==false">
+                    <then>
+                        <output expression="&quot;Prodotto non disponibile&quot;" newline="True"/>
+                    </then>
+                    <else/>
+                </if>
+                <output expression="&quot;Vuoi acquistare un altro prodotto (s/n)?&quot;" newline="True"/>
+                <input variable="risposta"/>
+            </do>
+            <output expression="&quot;Il totale &#232; &quot; &amp; totale" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>
