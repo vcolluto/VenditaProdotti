@@ -43,6 +43,7 @@ public class Main {
 			for (i=0;i<nrProdotti;i++)
 				if (prodotti[i].toLowerCase().indexOf(daAcquistare.toLowerCase())>=0) {
 					trovato=true;
+					System.out.println("Prodotto trovato: "+prodotti[i]);
 					System.out.println("Prezzo: "+prezzi[i]);
 					System.out.print("Inserisci la quantità: ");
 					qta=sc.nextInt();
@@ -54,7 +55,7 @@ public class Main {
 						totale+=prezzi[i]*qta;
 					} else
 						System.out.println("Quantità non sufficiente");
-					
+					break;		//esco dal for
 				}
 			if (!trovato)
 				System.out.println("Prodotto non disponibile");
