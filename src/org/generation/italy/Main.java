@@ -15,10 +15,10 @@ public class Main {
 		String[] prodotti=new String[nrProdotti];
 		double[] prezzi=new double[nrProdotti];
 		int[] quantità=new int[nrProdotti];
-		int i,qta;
+		int i,qta, pos=0;
 		String daAcquistare, risposta;
 		double totale;
-		boolean trovato;
+		int nrTrovati;
 		
 		for (i=0;i<nrProdotti;i++) {
 			System.out.println("Inserisci il prodotto nr " + i);
@@ -39,26 +39,31 @@ public class Main {
 		do {
 			System.out.print("Che prodotto vuoi acquistare? ");
 			daAcquistare=sc.nextLine();
-			trovato=false;
+			nrTrovati=0;
 			for (i=0;i<nrProdotti;i++)
 				if (prodotti[i].toLowerCase().indexOf(daAcquistare.toLowerCase())>=0) {
-					trovato=true;
-					System.out.println("Prodotto trovato: "+prodotti[i]);
-					System.out.println("Prezzo: "+prezzi[i]);
-					System.out.print("Inserisci la quantità: ");
-					qta=sc.nextInt();
-					sc.nextLine();
+					 nrTrovati++;
+					 pos=i;		//memorizzo la posizione
 					
-					if(qta<=quantità[i]) {
-						System.out.println("Acquisto effettuato: "+ prezzi[i]*qta);
-						quantità[i]-=qta;	//quantità[i]=quantità[i]-qta;
-						totale+=prezzi[i]*qta;
-					} else
-						System.out.println("Quantità non sufficiente");
-					break;		//esco dal for
 				}
-			if (!trovato)
+			if (nrTrovati==0)
 				System.out.println("Prodotto non disponibile");
+			else if (nrTrovati==1) {		//ho trovato un solo prodotto => acquisto
+				System.out.println("Prodotto trovato: "+prodotti[pos]);
+				System.out.println("Prezzo: "+prezzi[pos]);
+				System.out.print("Inserisci la quantità: ");
+				qta=sc.nextInt();
+				sc.nextLine();
+				
+				if(qta<=quantità[pos]) {
+					System.out.println("Acquisto effettuato: "+ prezzi[pos]*qta);
+					quantità[pos]-=qta;	//quantità[i]=quantità[i]-qta;
+					totale+=prezzi[pos]*qta;
+				} else
+					System.out.println("Quantità non sufficiente");				
+			} else	// ho trovato più di un prodotto
+				System.out.println("E' stato trovato più di un prodotto, raffina la ricerca");
+				
 			System.out.print("Vuoi acquistare un altro prodotto (s/n)?");
 			risposta=sc.nextLine();
 		} while(risposta.equalsIgnoreCase("s"));
